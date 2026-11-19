@@ -1,0 +1,312 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-inter: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  * {
+    @apply border-hairline;
+  }
+
+  html {
+    @apply scroll-smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-canvas text-ink font-sans antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  /* Selection */
+  ::selection {
+    @apply bg-primary/20 text-ink;
+  }
+
+  /* Focus visible - Pinterest double-ring */
+  :focus-visible {
+    @apply outline-none ring-2 ring-focus-inner ring-offset-2 ring-offset-focus-outer;
+  }
+
+  /* ============================================================
+     ACESSIBILIDADE: Alto contraste automático (prefers-contrast)
+     ============================================================ */
+  @media (prefers-contrast: more) {
+    :root {
+      --primary: #502afa;
+      --ink: #000000;
+      --hairline: #000000;
+      --surface-card: #e5e5e0;
+    }
+
+    .btn-primary,
+    .btn-secondary,
+    .pin-card,
+    .input,
+    .search-bar {
+      @apply border-2 border-ink;
+    }
+  }
+
+  /* ============================================================
+     ACESSIBILIDADE: Reduzir movimento
+     ============================================================ */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* ============================================================
+     VÍDEO: Controles nativos maiores (mobile touch-friendly)
+     ============================================================ */
+  video::-webkit-media-controls-panel {
+    @apply bg-ink/95 backdrop-blur-sm;
+  }
+  video::-webkit-media-controls-play-button,
+  video::-webkit-media-controls-mute-button,
+  video::-webkit-media-controls-fullscreen-button,
+  video::-webkit-media-controls-pip-button {
+    @apply p-3 rounded-lg min-w-[48px] min-h-[48px];
+  }
+  video::-webkit-media-controls-timeline {
+    @apply h-3 rounded-full cursor-pointer;
+  }
+  video::-webkit-media-controls-volume-slider {
+    @apply h-3 rounded-full cursor-pointer w-24;
+  }
+}
+
+@layer components {
+  /* ============================================================
+     BUTTONS - Pinterest style
+     ============================================================ */
+
+  /* Primary - Pinterest Red, 16px radius, 40px height */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-3.5 py-1.5 h-10 text-button-md text-on-primary bg-primary transition-colors active:bg-primary-pressed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-inner focus-visible:ring-offset-2 focus-visible:ring-offset-focus-outer disabled:cursor-not-allowed disabled:bg-surface-card disabled:text-ash;
+  }
+
+  /* Secondary - Gray-cream, 16px radius, 40px height */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-3.5 py-1.5 h-10 text-button-md text-ink bg-secondary-bg transition-colors active:bg-secondary-pressed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-inner focus-visible:ring-offset-2 focus-visible:ring-offset-focus-outer disabled:cursor-not-allowed disabled:bg-surface-card disabled:text-ash;
+  }
+
+  /* Tertiary - Ghost link */
+  .btn-tertiary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-3.5 py-1.5 h-10 text-button-md text-ink bg-transparent transition-colors hover:bg-surface-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-inner focus-visible:ring-offset-2 focus-visible:ring-offset-focus-outer disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  /* Icon circular - 40px, full radius */
+  .btn-icon-circular {
+    @apply inline-flex items-center justify-center rounded-full w-10 h-10 bg-surface-card text-ink transition-colors hover:bg-secondary-bg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-inner focus-visible:ring-offset-2 focus-visible:ring-offset-focus-outer;
+  }
+
+  /* Pill on image - overlay on photography */
+  .btn-pill-on-image {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-3.5 py-2 text-button-md text-ink bg-canvas transition-colors hover:bg-surface-card;
+  }
+
+  /* Disabled state */
+  .btn-disabled {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-3.5 py-1.5 h-10 text-button-md text-ash bg-surface-card cursor-not-allowed;
+  }
+
+  /* ============================================================
+     INPUTS & FORMS
+     ============================================================ */
+
+  /* Text input - 44px height, 16px radius, double-ring focus */
+  .input {
+    @apply w-full rounded-md border border-ash bg-canvas px-[15px] py-2.5 h-11 text-body-md text-ink placeholder:text-ash transition-all focus:border-ink focus:ring-4 focus:ring-focus-outer focus:ring-offset-2 focus:ring-offset-focus-inner focus:outline-none disabled:cursor-not-allowed disabled:bg-surface-soft disabled:text-mute;
+  }
+
+  /* Search bar - pill radius, 48px height */
+  .search-bar {
+    @apply w-full rounded-full border border-transparent bg-surface-card px-[15px] py-2.5 h-12 text-body-md text-ink placeholder:text-ash transition-all focus:bg-canvas focus:border-ash focus:ring-4 focus:ring-focus-outer focus:ring-offset-2 focus:ring-offset-focus-inner focus:outline-none;
+  }
+
+  /* ============================================================
+     CARDS & CONTAINERS
+     ============================================================ */
+
+  /* Pin card - masonry tile, 16px radius, no padding, image is the card */
+  .pin-card {
+    @apply relative rounded-md bg-surface-card overflow-hidden;
+  }
+
+  /* Pin card large - 32px radius for feature pins */
+  .pin-card-large {
+    @apply relative rounded-lg bg-surface-card overflow-hidden;
+  }
+
+  /* Category tile - 16px radius, 16px padding */
+  .category-tile {
+    @apply rounded-md bg-surface-card p-4;
+  }
+
+  /* Feature card - 16px radius, 32px padding, canvas background */
+  .feature-card {
+    @apply rounded-md bg-canvas p-8;
+  }
+
+  /* Feature card soft - surface-card background */
+  .feature-card-soft {
+    @apply rounded-md bg-surface-card p-8;
+  }
+
+  /* Modal card - 32px radius, 32px padding, canvas, modal shadow */
+  .modal-card {
+    @apply rounded-lg bg-canvas p-8 shadow-modal;
+  }
+
+  /* Hero CTA strip - dark, no radius */
+  .hero-cta-strip {
+    @apply bg-surface-dark text-on-dark p-12 rounded-none;
+  }
+
+  /* Pin overlay pill - on photography */
+  .pin-overlay-pill {
+    @apply inline-flex items-center rounded-full px-3 py-1.5 text-button-sm text-ink bg-canvas;
+  }
+
+  /* Filter chip - pill, surface-card */
+  .filter-chip {
+    @apply inline-flex items-center rounded-full px-4 py-2 text-button-md text-ink bg-surface-card transition-colors hover:bg-secondary-bg;
+  }
+
+  .filter-chip-active {
+    @apply inline-flex items-center rounded-full px-4 py-2 text-button-md text-on-dark bg-ink;
+  }
+
+  /* ============================================================
+     NAVIGATION
+     ============================================================ */
+
+  .primary-nav {
+    @apply h-16 bg-canvas text-ink border-b border-hairline;
+  }
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
+
+  .footer-section {
+    @apply bg-canvas text-mute text-body-sm py-8 px-6 border-t border-hairline;
+  }
+
+  .link-inline {
+    @apply text-ink-soft text-link-md underline-offset-2 hover:underline;
+  }
+
+  /* ============================================================
+     LAYOUT UTILITIES
+     ============================================================ */
+
+  .section {
+    @apply py-section px-4 sm:px-6 lg:px-8 xl:px-12;
+  }
+
+  .container-max {
+    @apply mx-auto max-w-[1280px];
+  }
+
+  /* Masonry grid - column-based, 8px gutters */
+  .masonry-grid {
+    @apply grid gap-sm;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+
+  @media (max-width: 1023px) {
+    .masonry-grid {
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      @apply gap-xs;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .masonry-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Touch target minimum */
+  .touch-target-min {
+    @apply min-w-[48px] min-h-[48px];
+  }
+
+  /* Progress bar thick */
+  .progress-bar-thick {
+    @apply h-3 rounded-full overflow-hidden bg-surface-card;
+  }
+  .progress-bar-thick > div {
+    @apply h-full rounded-full transition-all duration-300 ease-out;
+  }
+
+  /* Video container */
+  .video-container {
+    @apply relative rounded-md overflow-hidden bg-surface-card;
+  }
+
+  /* Recording studio layout */
+  .recording-studio {
+    @apply grid gap-lg;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+
+  @media (max-width: 1023px) {
+    .recording-studio {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Camera toggle button */
+  .camera-toggle-btn {
+    @apply absolute top-3 right-3 z-10 p-2 rounded-full bg-ink/80 text-on-dark touch-target-min flex items-center justify-center transition-colors hover:bg-ink/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-inner focus-visible:ring-offset-2 focus-visible:ring-offset-focus-outer;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-in {
+    animation: animate-in 0.3s ease-out forwards;
+  }
+
+  @keyframes animate-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Pin image aspect ratios - preserve natural ratio */
+  .pin-aspect-square {
+    aspect-ratio: 1 / 1;
+  }
+  .pin-aspect-4-3 {
+    aspect-ratio: 4 / 3;
+  }
+  .pin-aspect-portrait {
+    aspect-ratio: 3 / 4;
+  }
+  .pin-aspect-tall {
+    aspect-ratio: 2 / 3;
+  }
+  .pin-aspect-4-5 {
+    aspect-ratio: 4 / 5;
+  }
+}
