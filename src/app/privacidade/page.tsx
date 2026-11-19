@@ -1,3 +1,5 @@
+'use client';
+
 import { Metadata } from 'next';
 import Link from 'next/link';
 
@@ -31,7 +33,7 @@ export default function PrivacyPage() {
           </time>
         </header>
 
-        <section className="animate-in" style={{ animationDelay: '0.1s' }}>
+        <section className="pt-8 animate-in" style={{ animationDelay: '0.1s' }}>
           <h3 className="text-heading-md mb-3">1. Dados que coletamos</h3>
           <ul className="space-y-3 text-body-md text-body">
             <li className="flex items-start gap-3">
@@ -258,7 +260,8 @@ export default function PrivacyPage() {
           <Link href="/" className="btn-primary">
             Voltar ao site
           </Link>
-        </div      </section>
+        </div>
+      </section>
 
       <footer className="footer-section" role="contentinfo">
         <div className="container-max text-center">
