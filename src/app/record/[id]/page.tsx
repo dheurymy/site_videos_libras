@@ -399,17 +399,21 @@ export default function RecordPage() {
                   </>
                 ) : (
                   <>
-                    <video
-                      className="w-full h-full object-cover"
-                      src={previewUrl}
-                      controls
-                      autoPlay
-                      playsInline
-                      aria-label="Sua gravação para revisão"
-                    />
-                    <div className="absolute bottom-3 right-3 text-button-sm text-on-dark/90 bg-ink/80 px-3 py-1.5 rounded-full">
-                      Duração: {formatTime(recordingTime)}
-                    </div>
+                    {previewUrl && (
+                      <>
+                        <video
+                          className="w-full h-full object-cover"
+                          src={previewUrl}
+                          controls
+                          autoPlay
+                          playsInline
+                          aria-label="Sua gravação para revisão"
+                        />
+                        <div className="absolute bottom-3 right-3 text-button-sm text-on-dark/90 bg-ink/80 px-3 py-1.5 rounded-full">
+                          Duração: {formatTime(recordingTime)}
+                        </div>
+                      </>
+                    )}
                   </>
                 )}
               </div>
